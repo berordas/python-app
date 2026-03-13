@@ -7,12 +7,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #296a33, #bbf8c4);
+        }
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
         }
         .converter-card {
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgb(134, 201, 181);
+            width: min(92vw, 420px);
         }
         .result-box {
             font-size: 1.5rem;
@@ -22,9 +30,10 @@
     </style>
 </head>
 
-<body class="d-flex justify-content-center align-items-center vh-100">
+<body style="font-family: Fantasy;">
 
-    <div class="card shadow-lg p-4 converter-card" style="width: 400px;">
+    <div class="page">
+        <div class="card shadow-lg p-4 converter-card">
         <h2 class="text-center mb-4">💱 Conversor de Divisas</h2>
 
         <form method="post">
@@ -35,18 +44,18 @@
                        placeholder="Introduce cantidad" required>
             </div>
 
-            <div class="row mb-3">
-                <div class="col">
+            <div class="row mb-3 g-2 align-items-center">
+                <div class="col-12 col-sm-5">
                     <select name="from_currency" class="form-select">
                         <option value="EUR">EUR €</option>
                         <option value="USD">USD $</option>
                         <option value="GBP">GBP £</option>
                     </select>
                 </div>
-                <div class="col text-center align-self-center">
+                <div class="col-12 col-sm-2 text-center">
                     →
                 </div>
-                <div class="col">
+                <div class="col-12 col-sm-5">
                     <select name="to_currency" class="form-select">
                         <option value="USD">USD $</option>
                         <option value="EUR">EUR €</option>
@@ -67,6 +76,12 @@
                 {{ result }}
             </div>
         {% endif %}
+        {% if error %}
+            <div class="alert alert-danger mt-3 mb-0 text-center">
+                {{ error }}
+            </div>
+        {% endif %}
+        </div>
     </div>
 
 </body>
