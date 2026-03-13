@@ -12,9 +12,19 @@ def home():
 
     if request.method == 'POST':
         try:
-            amount = float(request.form['amount'])
-            from_currency = request.form['from_currency']
-            to_currency = request.form['to_currency']
+            amount_raw = (request.form.get('amount') or '').strip()
+            amount_raw = amount_raw.replace(',', '.')
+            from_currency = (request.form.get('from_currency') or '').strip()
+            to_currency = (request.form.get('to_currency') or '').strip()
+
+            if not amount_raw:
+                raise ValueError
+
+            amount = float(amount_raw)
+
+            if not from_currency or not to_currency:
+                error = "Selecciona ambas divisas."
+                return render_template('index.html', result=result, error=error)
 
             # Simple static exchange rates
             rates = {
