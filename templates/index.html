@@ -3,71 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor de Divisas</title>
+    <title>CambioRápido — Conversor de Divisas</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-        }
-        .converter-card {
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .result-box {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #198754;
-        }
-    </style>
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 
-<body class="d-flex justify-content-center align-items-center vh-100">
+<body>
 
-    <div class="card shadow-lg p-4 converter-card" style="width: 400px;">
-        <h2 class="text-center mb-4">💱 Conversor de Divisas</h2>
+    <!-- ── Navbar ──────────────────────────────────── -->
+    <nav class="navbar navbar-expand-lg" id="main-navbar">
+        <div class="container">
 
-        <form method="post">
-            <div class="mb-3">
-                <label class="form-label">Cantidad</label>
-                <input type="number" step="0.01" name="amount" 
-                       class="form-control form-control-lg" 
-                       placeholder="Introduce cantidad" required>
+            <!-- Logo + Brand -->
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="28" height="28" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                     class="navbar-logo-icon">
+                    <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <span class="brand-name">CambioRápido</span>
+            </a>
+
+            <!-- Mobile toggler -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Conversor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tasas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Acerca de</a>
+                    </li>
+                </ul>
             </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <select name="from_currency" class="form-select">
-                        <option value="EUR">EUR €</option>
-                        <option value="USD">USD $</option>
-                        <option value="GBP">GBP £</option>
-                    </select>
+        </div>
+    </nav>
+
+    <!-- ── Main Content ─────────────────────────────── -->
+    <main class="page-content">
+        <div class="card shadow-lg p-4 converter-card">
+
+            <h2 class="text-center mb-4">💱 Conversor de Divisas</h2>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" step="0.01" name="amount"
+                           class="form-control form-control-lg"
+                           placeholder="Introduce cantidad" required>
                 </div>
-                <div class="col text-center align-self-center">
-                    →
-                </div>
-                <div class="col">
-                    <select name="to_currency" class="form-select">
-                        <option value="USD">USD $</option>
-                        <option value="EUR">EUR €</option>
-                        <option value="GBP">GBP £</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">
-                    Convertir
-                </button>
-            </div>
-        </form>
+                <div class="row mb-3">
+                    <div class="col">
+                        <select name="from_currency" class="form-select">
+                            <option value="EUR">EUR €</option>
+                            <option value="USD">USD $</option>
+                            <option value="GBP">GBP £</option>
+                        </select>
+                    </div>
+                    <div class="col text-center align-self-center currency-arrow">
+                        ⇄
+                    </div>
+                    <div class="col">
+                        <select name="to_currency" class="form-select">
+                            <option value="USD">USD $</option>
+                            <option value="EUR">EUR €</option>
+                            <option value="GBP">GBP £</option>
+                        </select>
+                    </div>
+                </div>
 
-        {% if result is not none %}
-            <div class="mt-4 text-center result-box">
-                {{ result }}
-            </div>
-        {% endif %}
-    </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg convert-btn">
+                        Convertir
+                    </button>
+                </div>
+            </form>
+
+            {% if result is not none %}
+                <div class="mt-4 text-center result-box">
+                    {{ result }}
+                </div>
+            {% endif %}
+
+        </div>
+    </main>
+
+    <!-- Bootstrap JS (required for mobile navbar toggler) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
